@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\Mail\ApiSandboxMailable;
 use App\Console\Commands\Mail\ApiSimple;
 use App\Console\Commands\Mail\ApiSimpleMailable;
+use App\Console\Commands\Mail\ApiSimpleMailableQueue;
 use App\Console\Commands\Mail\ReactSender;
 use App\Console\Commands\Mail\Simple;
 use Illuminate\Console\Scheduling\Schedule;
@@ -23,6 +24,7 @@ class Kernel extends ConsoleKernel
         Simple::class,
         ApiSimple::class,
         ApiSimpleMailable::class,
+        ApiSimpleMailableQueue::class,
         ApiSandboxMailable::class,
         ReactSender::class,
     ];

@@ -4,14 +4,14 @@ namespace App\Console\Commands\Mail;
 
 use Illuminate\Console\Command;
 
-class ApiSimpleMailable extends Command
+class ApiSimpleMailableQueue extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'sendgrid:mail-api-simple-mailable';
+    protected $signature = 'sendgrid:mail-api-simple-mailable-queue';
 
     /**
      * The console command description.
