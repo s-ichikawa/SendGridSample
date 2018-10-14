@@ -4,6 +4,7 @@ namespace App\Console\Commands\Mail;
 
 use Illuminate\Console\Command;
 use Illuminate\Mail\Message;
+use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 class ApiMultiplePersonalizations extends Command
 {
@@ -38,7 +39,7 @@ class ApiMultiplePersonalizations extends Command
      */
     public function handle()
     {
-        \Mail::send('mails.multiple', [], function (Message $message) {
+        \Mail::send('mails.simple', [], function (Message $message) {
             $message
                 ->subject('[Sample] multiple mail.')
                 ->to('dumy@example.com')
@@ -60,7 +61,7 @@ class ApiMultiplePersonalizations extends Command
                         ],
                     ],
 
-                ], SendgridV3Transport::SMTP_API_NAME);
+                ], SendgridTransport::SMTP_API_NAME);
         });
     }
 }
