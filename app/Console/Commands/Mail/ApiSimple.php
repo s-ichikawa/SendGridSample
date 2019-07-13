@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands\Mail;
 
+use App\Events\MailEventListener;
 use Illuminate\Console\Command;
+use Illuminate\Mail\Mailer;
 use Illuminate\Mail\Message;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
@@ -39,25 +41,28 @@ class ApiSimple extends Command
      */
     public function handle()
     {
-        app('mailer')->send('mails.simple_php', [], function (Message $message) {
+        /** @var Mailer $mailer */
+        $mailer = app('mailer');
+//        $mailer->getSwiftMailer()->registerPlugin(new MailEventListener());
+        $mailer->send([], [], function (Message $message) {
             $message
                 ->subject('[Sample] simple mail.')
                 ->to('dumy@example.com')
                 ->replyTo('ichikawa.shingo.0829+reply@gmail.com')
-                ->embedData([
+                ->embedData(json_encode([
                     'personalizations' => [
                         [
                             'to' => [
-                                'email' => 'ichikawa.shingo.0829+test1@gmail.com',
+                                'email' => 'ichikawa.shingo.0829@gmail.com',
                                 'name'  => 's-ichikawa1',
                             ],
-                            'substitutions' => [
-                                '{{name}}' => 'test_name',
-                                '{{email}}' => 'test_email'
+                            'dynamic_template_data' => [
+                                'name' => 'Shingo Ichikawa',
                             ],
                         ],
                     ],
-                ], SendgridTransport::SMTP_API_NAME);
+                    'template_id' => config('services.sendgrid.templates.dynamic_sample')
+                ]), SendgridTransport::SMTP_API_NAME);
         });
     }
 }
